@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Victor's Emotion Therapy Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c5                    <p class="text-muted">"Dr. Blane said I'm the reason my own shadow tries to walk faster than me. I told him I've been avoiding my weight gain and he said, 'No, you've been avoiding mirrors. You don't need to stop running from the problem—you need to start running period.' Then he looked down at my shoes and said, 'Don't worry, they've clearly never been used.' I thought therapy was supposed to help me heal, not hand me trauma with a side of cholesterol."</p>a0;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --light-bg: #f8f9fa;
+            --text-dark: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: #ffffff;
+            background-color: #121212;
+            font-size: 14px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(44, 90, 160, 0.9), rgba(108, 117, 125, 0.8)), 
+                        url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+          .therapist-image {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .testimonial-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .star-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+        
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .section-padding {
+            padding: 0px 0;
+        }
+          .bg-primary-gradient {
+            background: linear-gradient(135deg, var(--primary-color), #4a90e2);
+        }
+        
+        /* Custom navbar button hover effect */
+        .navbar .nav-link[href*="register"]:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.8) !important;
+            color: white !important;
+        }
+
+        /* Testimonial Carousel */
+        .testimonial-carousel {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        #testimonialCards {
+            overflow: hidden;
+        }
+        
+        .card {
+            border: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            background-color: #2a2a2a !important;
+            border: 1px solid #444 !important;
+            color: #ffffff !important;
+        }
+        
+        .card .text-muted {
+            color: #b0b0b0 !important;
+        }
+        
+        .card small {
+            color: #888 !important;
+        }
+        
+        .card-body {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Custom CSS Carousel */
+        .custom-carousel {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            width: 33.333%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        .carousel-nav:hover {
+            background: #1a3f6e;
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 20px;
+        }
+
+        .carousel-next {
+            right: 20px;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #carouselExampleIndicators {
+            height: 100vh;
+        }
+
+        .carousel-inner {
+            height: 100%;
+        }
+
+        .carousel-item img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #lowerbar {
+            background-color: #1a1a1a;
+            padding: 40px 0 20px 0;
+            border-top: 1px solid #333;
+        }
+
+        #lowerbar .container {
+            max-width: 1200px;
+        }
+
+        #lowerbar ul.upper {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        #lowerbar ul.upper li {
+            font-size: 14px;
+        }
+
+        #lowerbar ul.upper li a {
+            color: white !important;
+            text-decoration: none !important;
+            transition: color 0.3s ease;
+        }
+
+        #lowerbar ul.upper li a:hover {
+            color: #2c5aa0 !important;
+        }
+
+        #lowerbar ul.lower {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        #lowerbar ul.lower li {
+            font-size: 13px;
+        }
+
+        #lowerbar ul.lower li a {
+            color: #b0b0b0 !important;
+            text-decoration: none !important;
+            transition: color 0.3s ease;
+        }
+
+        #lowerbar ul.lower li a:hover {
+            color: #2c5aa0 !important;
+        }
+
+        .social-icons {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex !important;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-icons li a {
+            font-size: 18px;
+            color: white !important;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icons li a:hover {
+            color: #2c5aa0 !important;
+        }
+
+        #language-selector-btn-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        #language-selector-btn-container i {
+            color: white;
+        }
+
+        #language-selector-btn {
+            font-size: 14px;
+            color: white !important;
+            text-decoration: none !important;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        #language-selector-btn:hover {
+            color: #2c5aa0 !important;
+            text-decoration: underline;
+        }
+
+        #lowerbar .copyright {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Responsive adjustments for footer */
+        @media (max-width: 768px) {
+            #lowerbar ul.upper,
+            #lowerbar ul.lower {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            #lowerbar ul.upper li,
+            #lowerbar ul.lower li {
+                margin: 5px 10px;
+            }
+        }
+
+        .navbar {
+            background: rgba(44, 90, 160, 0.95) !important;
+            backdrop-filter: blur(10px);
+            font-size: 0.875rem;
+            padding: 0.5rem 0;
+        }
+        .navbar-brand {
+            font-size: 1.1rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        
+        /* LinkedIn-style vertical nav items */
+        .navbar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .nav-item {
+            display: flex;
+        }
+        
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem 0.75rem !important;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            min-width: 70px;
+        }
+        
+        .nav-link i {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            margin-right: 0 !important;
+        }
+        
+        .nav-link span {
+            font-size: 0.75rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            transform: translateY(-1px);
+        }
+        
+        .nav-link.logout-btn {
+            background: var(--primary-color);
+            border: 2px solid white;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .nav-link.logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+        
+        /* Responsive navbar improvements */
+        @media (max-width: 1200px) {
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            .nav-link {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem !important;
+            }
+            .nav-link.ms-2.px-3 {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem !important;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+        }
+
+        /* Floating Notification */
+        #floating-notification {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1050;
+            display: none;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+
+        /* Button improvements for dark theme */
+        .btn-light {
+            background-color: #ffffff;
+            color: #2c5aa0;
+            border: 1px solid #ffffff;
+            font-weight: 600;
+        }
+
+        .btn-light:hover {
+            background-color: #f8f9fa;
+            color: #1a3f6e;
+            border-color: #f8f9fa;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #ffffff;
+            color: #2c5aa0;
+        }
+
+        /* Improve link colors throughout */
+        a {
+            color: #4a90e2;
+        }
+
+        a:hover {
+            color: #2c5aa0;
+        }
+
+        /* Ensure all text is readable in dark mode */
+        .text-muted {
+            color: #b0b0b0 !important;
+        }
+
+        /* Improve section spacing and consistency */
+        .section-padding {
+            padding: 40px 0;
+        }
+
+        /* Ensure cards maintain consistent styling */
+        .card {
+            border: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            background-color: #2a2a2a !important;
+            border: 1px solid #444 !important;
+            color: #ffffff !important;
+        }
+        
+        /* About section doctor image */
+        .doctor-about-image {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 4px solid #2c5aa0;
+            box-shadow: 0 8px 25px rgba(44, 90, 160, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .doctor-about-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(44, 90, 160, 0.4);
+        }
+    </style>
+</head>
+<body>    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background: rgba(44, 90, 160, 0.95) !important; backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+                <i class="fas fa-brain me-1"></i>Dr. Victor Blane's Center
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if session.get('logged_in') %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('index') }}">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('track') }}">
+                            <i class="fas fa-video"></i>
+                            <span>Track</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('trends') }}">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-btn" href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('index') }}">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">
+                            <i class="fas fa-concierge-bell"></i>
+                            <span>Services</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#carousel">
+                            <i class="fas fa-images"></i>
+                            <span>Gallery</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">
+                            <i class="fas fa-comments"></i>
+                            <span>Reviews</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-btn" href="{{ url_for('register') }}">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Get Started</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-btn" href="{{ url_for('login') }}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">
+                        Advanced Emotion Detection & Therapy
+                    </h1>
+                    <p class="lead mb-4">
+                        Revolutionary AI-powered emotion tracking combined with personalized therapy sessions. 
+                        Understand your emotional patterns and achieve better mental wellness.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="star-rating me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-white-50">1.2/5 stars (Based on real user feedback)</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-4">
+                            <i class="fas fa-play-circle me-2"></i>Start Free Trial
+                        </a>
+                        <a href="{{ url_for('track') }}" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-camera me-2"></i>Try Demo
+                        </a>
+                    </div>
+                </div>                <div class="col-lg-4 text-center">
+                    <img src="https://i.ytimg.com/vi/iRjzxTxjL6k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBPl9huzK12RJ9SBaQl3iddNsXPTQ" 
+                         alt="Dr. Victor Blane - Licensed Therapist" 
+                         class="therapist-image mb-3">
+                    <h4 class="text-white">Dr. Victor Blane</h4>
+                    <p class="text-white-50">Licensed Clinical Psychologist<br>AI Emotion Recognition Specialist</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-padding" style="background-color: #1a1a1a;">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="display-5 fw-bold mb-3" style="color: #ffffff;">Our Services</h2>
+                    <p class="lead" style="color: #b0b0b0;">Cutting-edge technology meets compassionate care</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card service-card h-100 text-center p-4" style="background-color: #2a2a2a; border: 1px solid #444;">
+                        <div class="card-body">
+                            <div class="mb-3" style="color: #2c5aa0;">
+                                <i class="fas fa-eye fa-3x"></i>
+                            </div>
+                            <h5 class="card-title" style="color: #ffffff;">Real-time Emotion Tracking</h5>
+                            <p class="card-text" style="color: #b0b0b0;">
+                                Advanced AI monitors your facial expressions in real-time to detect emotional states and patterns.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card service-card h-100 text-center p-4" style="background-color: #2a2a2a; border: 1px solid #444;">
+                        <div class="card-body">
+                            <div class="mb-3" style="color: #2c5aa0;">
+                                <i class="fas fa-chart-line fa-3x"></i>
+                            </div>
+                            <h5 class="card-title" style="color: #ffffff;">Emotion Analytics</h5>
+                            <p class="card-text" style="color: #b0b0b0;">
+                                Comprehensive reports and insights into your emotional patterns over time.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card service-card h-100 text-center p-4" style="background-color: #2a2a2a; border: 1px solid #444;">
+                        <div class="card-body">
+                            <div class="mb-3" style="color: #2c5aa0;">
+                                <i class="fas fa-user-md fa-3x"></i>
+                            </div>
+                            <h5 class="card-title" style="color: #ffffff;">Personal Therapy</h5>
+                            <p class="card-text" style="color: #b0b0b0;">
+                                One-on-one sessions with licensed therapists based on your emotion data.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel Section -->
+    <section id="carousel" class="section-padding" style="background-color: #121212;">
+        <div class="custom-carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide">
+                    <img src="https://i.postimg.cc/kM2vr6t9/image.png" alt="First slide">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://i.postimg.cc/SN2NrRPY/image.png" alt="Second slide">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://i.postimg.cc/7ZrDnV7j/image.png" alt="Third slide">
+                </div>
+            </div>
+            
+            <button class="carousel-nav carousel-prev" onclick="previousSlide()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav carousel-next" onclick="nextSlide()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-padding" style="background-color: #1a1a1a; padding-top: 80px;">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3" style="color: #ffffff;">What Our Clients Say</h2>
+                <p class="lead" style="color: #b0b0b0;">Real feedback from real users</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <img src="https://i.postimg.cc/tR20KkFK/image.png" alt="Alyssa T." class="testimonial-img mx-auto mb-3">
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="text-muted">"What kind of therapist calls his client ‘mid’ and then upgrades it to ‘ugly pig’ with zero hesitation? I came in asking why no guy ever sticks around, and he said, ‘Because you’re emotionally unstable and built like a confession booth.’ I asked him if he could just not be mean, and he literally said, ‘Facts don’t care about your feelings. And neither do I.’ No empathy, no help—just pure psychological violence."</p>
+                    <h6 class="fw-bold">Alyssa T.</h6>
+                    <small class="text-muted">Barista</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Mason J." class="testimonial-img mx-auto mb-3">
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="text-muted">"Dr. Blane said I’m the reason my own shadow tries to walk faster than me. I told him I’ve been avoiding my weight gain and he said, ‘No, you’ve been avoiding mirrors. You don’t need to stop running from the problem—you need to start running period.’ Then he looked down at my shoes and said, ‘Don’t worry, they’ve clearly never been used.’ I thought therapy was supposed to help me heal, not hand me trauma with a side of cholesterol."</p>
+                    <h6 class="fw-bold">Mason J.</h6>
+                    <small class="text-muted">Sales Associate</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Jason C." class="testimonial-img mx-auto mb-3">
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="text-muted">"I told him I’ve been feeling really stressed and he said, ‘Maybe it’s time you finally come out.’ I told him I’m not gay and he goes, ‘I won’t judge you for being gay, I’ll judge you for lying about it.’ I said I was straight, and he shouted, ‘Get out of my office and don’t come back until you have a boyfriend!’ I don’t even know what the session was about anymore. I paid $180 to be insulted, outed, and emotionally violated."</p>
+                    <h6 class="fw-bold">Jason C.</h6>
+                    <small class="text-muted">Freelancer</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/men/47.jpg" alt="Travis M." class="testimonial-img mx-auto mb-3">
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="text-muted">"I told him I've been feeling heavy lately. He said, 'So does the floor when you walk in.' Then he told me, with a straight face, 'You don't need therapy. You need stairs and fear.' He called my Fitbit a liar and said chairs probably unionized against me. I came in depressed. I left needing to apologize to furniture."</p>
+                    <h6 class="fw-bold">Travis M.</h6>
+                    <small class="text-muted">Retail Manager</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Riley B." class="testimonial-img mx-auto mb-3">
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="text-muted">"I said I felt emotionally used. He said, 'You offer nothing but chaos and cleavage. Of course they only want one of those.' Then he leaned back, looked at my Instagram, and said, 'You market yourself like a discount firework stand: loud, cheap, and guaranteed to blow up on contact.' I didn't know whether to cry or throw something."</p>
+                    <h6 class="fw-bold">Riley B.</h6>
+                    <small class="text-muted">Social Media Influencer</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/women/66.jpg" alt="Kendra F." class="testimonial-img mx-auto mb-3">
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="text-muted">"I started crying ten minutes in. He said, 'Tears don't burn calories.' When I told him I feel like people avoid me, he said, 'If I saw you walking toward me in a food court, I'd flee too.' Then he told me dieting wouldn't be so hard if I quit treating every fridge like a confessional. He didn't blink once. I've never been insulted so calmly."</p>
+                    <h6 class="fw-bold">Kendra F.</h6>
+                    <small class="text-muted">Graphic Designer</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- CTA Section -->
+    <section class="section-padding" style="background: linear-gradient(135deg, #2c5aa0, #1a3f6e); color: white;">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Start Your Journey?</h2>
+                    <p class="lead mb-4">
+                        Join thousands of clients who are discovering their emotional patterns and improving their mental health.
+                    </p>
+                    <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-5" style="color: #2c5aa0; font-weight: bold;">
+                        <i class="fas fa-user-plus me-2"></i>Get Started Today
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Dr. Victor Blane Section -->
+    <section id="about" class="section-padding" style="background-color: #1a1a1a;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 text-center mb-4 mb-lg-0">
+                    <img src="https://i.postimg.cc/vTVDZdW8/image.png?text=Dr.+Victor+Blane" 
+                         alt="Dr. Victor Blane - Licensed Clinical Psychologist" 
+                         class="doctor-about-image">
+                </div>
+                <div class="col-lg-7">
+                    <h2 class="display-5 fw-bold mb-4" style="color: #ffffff;">
+                        <i class="fas fa-user-md me-3" style="color: #2c5aa0;"></i>About Dr. Victor Blane
+                    </h2>
+                    <p class="lead mb-4" style="color: #b0b0b0;">
+                        Meet our pioneering therapist who revolutionizes mental health with his unique, direct approach.
+                    </p>
+                    <p style="color: #ffffff; font-size: 1.1rem; line-height: 1.8;">
+                        Dr. Victor Blane is a licensed clinical psychologist with over 15 years of experience in cutting-edge therapeutic techniques. 
+                        Known for his unconventional yet effective methods, Dr. Blane combines traditional psychology with AI-powered emotion recognition 
+                        to deliver transformative results.
+                    </p>
+                    <p style="color: #b0b0b0; font-size: 1rem; line-height: 1.6;">
+                        His direct, no-nonsense approach challenges clients to confront their deepest fears and limitations. While his methods may seem 
+                        intense, Dr. Blane believes that true growth comes from facing uncomfortable truths. His innovative integration of artificial 
+                        intelligence with human psychology has helped thousands of clients achieve breakthrough moments in their mental health journey.
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-graduation-cap fa-2x me-3" style="color: #2c5aa0;"></i>
+                                <div>
+                                    <h6 class="mb-0" style="color: #ffffff;">Licensed Clinical Psychologist</h6>
+                                    <small style="color: #b0b0b0;">PhD in Clinical Psychology</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-brain fa-2x me-3" style="color: #2c5aa0;"></i>
+                                <div>
+                                    <h6 class="mb-0" style="color: #ffffff;">AI Integration Specialist</h6>
+                                    <small style="color: #b0b0b0;">Emotion Recognition Expert</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-award fa-2x me-3" style="color: #2c5aa0;"></i>
+                                <div>
+                                    <h6 class="mb-0" style="color: #ffffff;">15+ Years Experience</h6>
+                                    <small style="color: #b0b0b0;">Thousands of clients served</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-star fa-2x me-3" style="color: #2c5aa0;"></i>
+                                <div>
+                                    <h6 class="mb-0" style="color: #ffffff;">Innovative Methods</h6>
+                                    <small style="color: #b0b0b0;">Direct therapeutic approach</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="lowerbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Navigation Links -->
+                    <ul class="upper">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Our Services</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#testimonials">Reviews</a></li>
+                        <li><a href="#advice">Advice</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#therapists">Find a Therapist</a></li>
+                        <li><a href="#online-therapy">Online Therapy</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#for-therapists">For Therapists</a></li>
+                    </ul>
+                    
+                    <!-- Social Icons -->
+                    <ul class="social-icons">
+                        <li><a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.tiktok.com" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a></li>
+                        <li><a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                    
+                    <!-- Lower Links and Language Selector -->
+                    <ul class="lower">
+                        <li><a href="#terms">Terms &amp; Conditions</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="javascript:void(0)" onclick="show_cookie_settings_modal();">Sharing Settings</a></li>
+                        <li><a href="#accessibility">Web Accessibility</a></li>
+                    </ul>
+                    
+                    <div id="language-selector-btn-container">
+                        <i class="fa fa-globe"></i>
+                        <button id="language-selector-btn">English</button>
+                    </div>
+                    
+                    <!-- Copyright -->
+                    <div class="copyright">
+                        <p>© 2025 Victor Blane. All rights reserved. | Emotion Analysis and Therapy Center</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Notification -->
+<div id="floating-notification" class="alert alert-warning alert-dismissible fade show" role="alert" style="position: fixed; top: 70px; right: 20px; z-index: 1050; display: none;">
+    <span id="notification-message"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const notificationMessage = '{{ session.get("alert_message", "") }}';
+        const notificationElement = document.getElementById('floating-notification');
+        const messageElement = document.getElementById('notification-message');
+
+        if (notificationMessage) {
+            messageElement.textContent = notificationMessage;
+            notificationElement.style.display = 'block';
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notificationElement.style.display = 'none';
+            }, 5000);
+        }
+    });
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let currentSlide = 0;
+        let autoSlideInterval;
+        let restartTimeout;
+        const totalSlides = 3;
+
+        function showSlide(slideIndex) {
+            const container = document.querySelector('.carousel-container');
+            
+            // Update the slide position
+            const translateX = -slideIndex * 33.333;
+            container.style.transform = `translateX(${translateX}%)`;
+            
+            currentSlide = slideIndex;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+            restartAutoSlide();
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+            restartAutoSlide();
+        }
+
+        function startAutoSlide() {
+            stopAutoSlide(); // Clear any existing interval
+            autoSlideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+            }, 3000);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = null;
+            }
+        }
+
+        function restartAutoSlide() {
+            stopAutoSlide();
+            
+            // Clear any existing restart timeout
+            if (restartTimeout) {
+                clearTimeout(restartTimeout);
+            }
+            
+            // Set new restart timeout
+            restartTimeout = setTimeout(() => {
+                startAutoSlide();
+                restartTimeout = null;
+            }, 2000);
+        }
+
+        // Initialize carousel when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlide(0); // Start with first slide
+            startAutoSlide();
+            
+            // Pause auto-slide on hover
+            const carousel = document.querySelector('.custom-carousel');
+            carousel.addEventListener('mouseenter', stopAutoSlide);
+            carousel.addEventListener('mouseleave', startAutoSlide);
+        });
+    </script>
+</body>
+</html>
