@@ -411,14 +411,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link logout-btn" href="{{ url_for('login') }}">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span>Login</span>
+                        <a class="nav-link ms-2 px-3" href="{{ url_for('register') }}" style="background: var(--primary-color); border: 2px solid white; border-radius: 8px; transition: all 0.3s ease;">
+                            <i class="fas fa-user-plus me-1"></i><span style="font-size: 0.75rem;">Get Started</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-2 px-3" href="{{ url_for('register') }}" style="background: var(--primary-color); border: 2px solid white; border-radius: 8px; transition: all 0.3s ease;">
-                            <i class="fas fa-user-plus me-1"></i>Get Started
+                        <a class="nav-link logout-btn" href="{{ url_for('login') }}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login</span>
                         </a>
                     </li>
                     {% endif %}
@@ -758,9 +758,7 @@
                     duration: 1000,
                     easing: 'easeInOutQuart'
                 }
-            }
-        });
-
+            });
         function getEmotionValue(emotion) {
             const emotionMap = {
                 'neutral': 0, 'happy': 1, 'sad': 2, 'angry': 3, 
