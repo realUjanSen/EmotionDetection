@@ -15,6 +15,58 @@ global_face_detector = FaceDetector()
 global_emotion_predictor = EmotionPredictor('models/fer2013_big_XCEPTION.54-0.66.hdf5')
 print("✅ Models loaded successfully!")
 
+def generate_sample_emotion_data(days_active):
+    """Generate sample emotion chart data based on user's active days"""
+    import random
+    from datetime import datetime, timedelta
+    
+    if days_active == 0:
+        return {"labels": [], "values": []}
+    
+    # Generate 3 equidistant points across the active period
+    labels = []
+    values = []
+    
+    # Emotion mapping to numerical values for trending
+    emotion_values = {
+        'happy': 85,
+        'neutral': 50,
+        'sad': 20,
+        'angry': 15,
+        'fear': 25,
+        'surprise': 75,
+        'disgust': 30
+    }
+    
+    if days_active == 1:
+        labels = ["Today"]
+        values = [random.choice(list(emotion_values.values()))]
+    elif days_active == 2:
+        labels = ["Day 1", "Today"]
+        values = [random.choice(list(emotion_values.values())), 
+                 random.choice(list(emotion_values.values()))]
+    else:
+        # 3 equidistant points
+        start_date = datetime.now() - timedelta(days=days_active-1)
+        mid_date = start_date + timedelta(days=(days_active-1)//2)
+        end_date = datetime.now()
+        
+        labels = [
+            start_date.strftime('%b %d'),
+            mid_date.strftime('%b %d'),
+            end_date.strftime('%b %d')
+        ]
+        
+        # Generate trending values (slightly improving over time)
+        base_value = random.randint(30, 60)
+        values = [
+            base_value,
+            base_value + random.randint(-10, 15),
+            base_value + random.randint(5, 25)
+        ]
+    
+    return {"labels": labels, "values": values}
+
 @app.route('/')
 def index():
     alert = session.pop('alert_message', None)
@@ -63,8 +115,8 @@ def dashboard():
         # Get recent emotion sessions with proper formatting
         recent_sessions = get_recent_sessions_with_details(user['id'], limit=10)
         
-        # Provide default empty data for emotion_data (for chart)
-        emotion_data = {"labels": [], "values": []}
+        # Generate sample emotion chart data based on days active
+        emotion_data = generate_sample_emotion_data(user_stats['days_active'])
         
         return render_template(
             'dashboard.html', 

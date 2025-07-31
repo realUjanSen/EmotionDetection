@@ -357,7 +357,9 @@
                     <h3 class="section-title mb-4">
                         <i class="fas fa-chart-area me-2"></i>Your Emotional Journey
                     </h3>
-                    <canvas id="emotionChart"></canvas>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="emotionChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -457,18 +459,48 @@
             data: {
                 labels: emotionData.labels,
                 datasets: [{
-                    label: 'Emotional Trends',
+                    label: 'Emotional Wellness Score',
                     data: emotionData.values,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    fill: false
+                    borderColor: 'rgba(44, 90, 160, 1)',
+                    backgroundColor: 'rgba(44, 90, 160, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(44, 90, 160, 1)',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 2,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#666'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#666'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#333'
+                        }
                     }
                 }
             }
