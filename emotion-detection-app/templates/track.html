@@ -121,7 +121,7 @@
             background: linear-gradient(135deg, var(--primary-color), #4a90e2);
             color: white;
             border-radius: 15px;
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
             box-shadow: 0 10px 25px rgba(44, 90, 160, 0.3);
         }
@@ -132,14 +132,14 @@
             color: white !important;
             border-radius: 15px !important;
             font-weight: 600;
-            padding: 1.5rem !important;
-            font-size: 1.2rem;
+            padding: 1.5rem 1rem !important;
+            font-size: 1.25rem;
             box-shadow: 0 10px 25px rgba(44, 90, 160, 0.3) !important;
             border: none !important;
             transition: all 0.3s ease !important;
             text-align: center;
             width: 100%;
-            max-width: 300px;
+            max-width: none;
         }
         
         .btn-capture-emotion:hover, 
@@ -487,10 +487,10 @@
                             <div class="webcam-container text-center">
                                 <h5 class="mb-3">AI Analysis</h5>
                                 <div id="result-container" style="display:none;">
-                                    <canvas id="processed-frame-canvas" width="400" height="300" class="video-frame mb-3"></canvas>
+                                    <canvas id="processed-frame-canvas" width="400" height="300" class="video-frame"></canvas>
                                     <div class="emotion-display">
-                                        <h4 class="mb-0">Detected Emotion:</h4>
-                                        <div id="emotion-label" class="h2 fw-bold mt-2">--</div>
+                                        <h6 class="mb-1">Detected Emotion:</h6>
+                                        <div id="emotion-label" class="h5 fw-bold mt-1">--</div>
                                     </div>
                                 </div>
                                 <div class="text-muted" id="analysis-placeholder">
