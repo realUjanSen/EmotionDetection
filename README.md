@@ -31,7 +31,7 @@ This project is an emotion detection web application that leverages deep learnin
 3.Understood the challenges of real-world emotion recognition and dataset handling  
 4.Improved skills in deploying and testing machine learning models
 
-```markdown
+
 # Emotion Detection App
 
 A full-stack web application for real-time facial emotion recognition using deep learning and computer vision. Built with Flask, OpenCV, Deepface, and a custom CNN, it supports live webcam analysis and interactive dashboards for emotion analytics. The modular backend enables rapid model experimentation, while the frontend offers dynamic charting and session logs. Designed for extensibility, the system integrates therapist feedback, supports custom emotion categories, and provides RESTful APIs for emotion data. Ideal for research, mental health, and advanced analytics.
@@ -86,4 +86,4 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-``` 
+
