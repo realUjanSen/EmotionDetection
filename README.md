@@ -35,7 +35,7 @@ This project is an emotion detection web application that leverages deep learnin
 # Emotion Detection App
 
 A full-stack web application for real-time facial emotion recognition using deep learning and computer vision. Built with Flask, OpenCV, Deepface, and a custom CNN, it supports live webcam analysis and interactive dashboards for emotion analytics. The modular backend enables rapid model experimentation, while the frontend offers dynamic charting and session logs. Designed for extensibility, the system integrates therapist feedback, supports custom emotion categories, and provides RESTful APIs for emotion data. Ideal for research, mental health, and advanced analytics.
-![chuck-norris-emotion](image.png)
+<img width="1116" height="531" alt="image" src="https://github.com/user-attachments/assets/878c2c6c-731f-415d-9429-80acc2fa5fc5" />
 # Real-Time Emotion Detection and Feedback System
 
 This project is a Real-Time Emotion Detection and Feedback System built using Flask, OpenCV, and a Convolutional Neural Network (CNN) for emotion modeling. The application allows users to register, track their emotions, and visualize emotional trends over time.
