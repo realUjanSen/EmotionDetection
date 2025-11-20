@@ -30,7 +30,11 @@ class EmotionPredictor:
         return reshaped_image
 
     def predict_emotion(self, image):
+        # Preprocess: Convert to grayscale, resize to 64x64, normalize
         processed_image = self.preprocess_image(image)
+        # Run inference using loaded XCEPTION model
         predictions = self.model.predict(processed_image)
+        # Return highest probability emotion label
         emotion_index = np.argmax(predictions)
+        14
         return self.emotion_labels[emotion_index], predictions[0][emotion_index]
