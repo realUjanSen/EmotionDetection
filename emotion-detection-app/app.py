@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 import base64
 import numpy as np
 import cv2
-from utils.db import register_user, login_user, log_emotion, get_user_by_email, get_recent_emotion_logs, get_user_stats, get_recent_sessions_with_details
+from utils.db import register_user, login_user, log_emotion, get_user_by_email, get_recent_emotion_logs, get_user_stats, get_recent_sessions_with_details, delete_emotion_by_timestamp, delete_all_emotions
 from utils.face_detector import FaceDetector
 from utils.emotion_predictor import EmotionPredictor
 
@@ -265,6 +265,53 @@ def api_emotion_logs():
         'emotions': emotions,
         'logs': [{'date': log['timestamp'].strftime('%Y-%m-%d %H:%M:%S'), 'emotion': log['emotion']} for log in logs]
     })
+
+@app.route('/api/delete_emotion', methods=['POST'])
+def api_delete_emotion():
+    """Delete a specific emotion log by timestamp"""
+    if 'email' not in session:
+        return jsonify({'error': 'User not logged in'}), 401
+    
+    user = get_user_by_email(session['email'])
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    
+    user_id = user['id']
+    timestamp = request.json.get('timestamp')
+    
+    if not timestamp:
+        return jsonify({'error': 'No timestamp provided'}), 400
+    
+    try:
+        deleted_count = delete_emotion_by_timestamp(user_id, timestamp)
+        if deleted_count > 0:
+            print(f"[DEBUG] Deleted {deleted_count} emotion log(s) for user {user_id} at {timestamp}")
+            return jsonify({'success': True, 'deleted_count': deleted_count})
+        else:
+            return jsonify({'error': 'No matching emotion log found'}), 404
+    except Exception as e:
+        print(f"[ERROR] Failed to delete emotion: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/delete_all_emotions', methods=['POST'])
+def api_delete_all_emotions():
+    """Delete all emotion logs for the current user"""
+    if 'email' not in session:
+        return jsonify({'error': 'User not logged in'}), 401
+    
+    user = get_user_by_email(session['email'])
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    
+    user_id = user['id']
+    
+    try:
+        deleted_count = delete_all_emotions(user_id)
+        print(f"[DEBUG] Deleted all {deleted_count} emotion logs for user {user_id}")
+        return jsonify({'success': True, 'deleted_count': deleted_count})
+    except Exception as e:
+        print(f"[ERROR] Failed to delete all emotions: {e}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -126,3 +126,28 @@ def get_recent_sessions_with_details(user_id, limit=10):
     cursor.close()
     conn.close()
     return sessions
+
+def delete_emotion_by_timestamp(user_id, timestamp):
+    """Delete a specific emotion log by timestamp for a user"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        DELETE FROM emotion_logs 
+        WHERE user_id = %s AND timestamp = %s
+    """, (user_id, timestamp))
+    deleted_count = cursor.rowcount
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return deleted_count
+
+def delete_all_emotions(user_id):
+    """Delete all emotion logs for a user"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM emotion_logs WHERE user_id = %s", (user_id,))
+    deleted_count = cursor.rowcount
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return deleted_count

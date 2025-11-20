@@ -356,14 +356,24 @@
             </div>
         </div>
 
-        <!-- Main Chart -->
-        <div class="row">
-            <div class="col-12">
+        <!-- Pie Chart and Timeline Row -->
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="trends-card p-4">
+                    <h3 class="section-title mb-4">
+                        <i class="fas fa-chart-pie me-2"></i>Emotion Distribution
+                    </h3>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="emotionPieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
                 <div class="trends-card p-4">
                     <h3 class="section-title mb-4" id="chartTitle">
                         <i class="fas fa-chart-line me-2"></i>Recent Emotion Timeline (Loading...)
                     </h3>
-                    <div class="chart-container">
+                    <div class="chart-container" style="height: 350px;">
                         <canvas id="emotionTrendChart"></canvas>
                     </div>
                     <div class="row mt-3">
@@ -378,6 +388,45 @@
                                 <span class="badge" style="background-color: #c9cbcf; color: #6c757d;">😐 Neutral</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session History Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="trends-card p-4">
+                    <h3 class="section-title mb-4">
+                        <i class="fas fa-history me-2"></i>Emotion History Manager
+                    </h3>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <p class="text-muted mb-0">View and manage your emotion detection sessions</p>
+                        <button class="btn btn-danger" onclick="deleteAllEmotions()" id="deleteAllBtn">
+                            <i class="fas fa-trash-alt me-2"></i>Delete All History
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="sessionHistoryTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Emotion</th>
+                                    <th>Date & Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sessionHistoryBody">
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" onclick="loadAllSessions()" id="loadMoreBtn">
+                            <i class="fas fa-sync-alt me-2"></i>Refresh History
+                        </button>
                     </div>
                 </div>
             </div>
@@ -432,6 +481,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('emotionTrendChart').getContext('2d');
+        const pieCtx = document.getElementById('emotionPieChart').getContext('2d');
         
         // Emotion color mapping for visual variety
         const emotionColors = {
@@ -464,6 +514,146 @@
         
         let emotionChartData = [];
         let maxDataPoints = 25; // Show last 25 emotions
+        let allSessions = [];
+        
+        // Pie Chart
+        const pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Happy', 'Sad', 'Angry', 'Fear', 'Surprise', 'Disgust', 'Neutral'],
+                datasets: [{
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: [
+                        '#ffc107',
+                        '#36a2eb',
+                        '#ff6384',
+                        '#9966ff',
+                        '#ff9f40',
+                        '#4bc0c0',
+                        '#c9cbcf'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#2c5aa0',
+                            font: {
+                                size: 11,
+                                weight: 'bold'
+                            },
+                            padding: 10
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                return `${label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
+                        formatter: function(value, context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                            if (percentage === 0) return '';
+                            return value + '\n(' + percentage + '%)';
+                        }
+                    }
+                }
+            },
+            plugins: [{
+                id: 'textInside',
+                afterDatasetDraw: function(chart) {
+                    const ctx = chart.ctx;
+                    chart.data.datasets.forEach(function(dataset, i) {
+                        const meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden) {
+                            meta.data.forEach(function(element, index) {
+                                const data = dataset.data[index];
+                                const total = dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = total > 0 ? Math.round((data / total) * 100) : 0;
+                                
+                                if (percentage > 0) {
+                                    const position = element.tooltipPosition();
+                                    const emotionLabel = chart.data.labels[index];
+                                    
+                                    // For small slices (less than 5%), draw label outside with a line
+                                    if (percentage < 5) {
+                                        // Calculate angle for positioning
+                                        const model = element;
+                                        const startAngle = model.startAngle || 0;
+                                        const endAngle = model.endAngle || 0;
+                                        const midAngle = startAngle + (endAngle - startAngle) / 2;
+                                        
+                                        // Get center of chart
+                                        const centerX = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
+                                        const centerY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2;
+                                        
+                                        // Calculate outer radius
+                                        const outerRadius = model.outerRadius || 100;
+                                        
+                                        // Line start point (edge of slice)
+                                        const lineStartX = centerX + Math.cos(midAngle) * outerRadius;
+                                        const lineStartY = centerY + Math.sin(midAngle) * outerRadius;
+                                        
+                                        // Line end point (further out)
+                                        const lineEndX = centerX + Math.cos(midAngle) * (outerRadius + 20);
+                                        const lineEndY = centerY + Math.sin(midAngle) * (outerRadius + 20);
+                                        
+                                        // Label position (even further out)
+                                        const labelX = centerX + Math.cos(midAngle) * (outerRadius + 35);
+                                        const labelY = centerY + Math.sin(midAngle) * (outerRadius + 35);
+                                        
+                                        // Draw line from slice to label
+                                        ctx.strokeStyle = dataset.backgroundColor[index];
+                                        ctx.lineWidth = 2;
+                                        ctx.beginPath();
+                                        ctx.moveTo(lineStartX, lineStartY);
+                                        ctx.lineTo(lineEndX, lineEndY);
+                                        ctx.stroke();
+                                        
+                                        // Draw label text with emotion name
+                                        ctx.fillStyle = '#333';
+                                        ctx.font = 'bold 12px Arial';
+                                        ctx.textAlign = labelX > centerX ? 'left' : 'right';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.fillText(emotionLabel + ': ' + data + ' (' + percentage + '%)', labelX, labelY);
+                                    } else {
+                                        // For larger slices, draw inside with emotion name
+                                        ctx.fillStyle = '#fff';
+                                        ctx.font = 'bold 13px Arial';
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.fillText(emotionLabel, position.x, position.y - 16);
+                                        ctx.fillText(data, position.x, position.y);
+                                        ctx.fillText('(' + percentage + '%)', position.x, position.y + 16);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }]
+        });
         
         const chart = new Chart(ctx, {
             type: 'line',
@@ -598,12 +788,15 @@
                         
                         console.log('Chart data points:', emotionChartData.length); // Debug log
                         
-                        // Update chart
+                        // Update line chart
                         chart.data.labels = emotionChartData.map(d => d.timestamp);
                         chart.data.datasets[0].data = emotionChartData.map(d => d.value);
                         chart.data.datasets[0].pointBackgroundColor = emotionChartData.map(d => d.colors.border);
                         chart.data.datasets[0].pointBorderColor = emotionChartData.map(d => d.colors.border);
                         chart.update();
+                        
+                        // Update pie chart
+                        updatePieChart(data.emotions);
                         
                         // Update chart title
                         document.getElementById('chartTitle').innerHTML = 
@@ -611,6 +804,12 @@
                         
                         // Update insight cards
                         updateInsightCards(data.emotions);
+                        
+                        // Update session history table
+                        if (data.logs) {
+                            allSessions = data.logs;
+                            updateSessionHistoryTable(data.logs);
+                        }
                     }
                 })
                 .catch(err => {
@@ -655,6 +854,160 @@
                 const capitalizedLatest = latestEmotion.charAt(0).toUpperCase() + latestEmotion.slice(1);
                 document.getElementById('latestEmotion').textContent = capitalizedLatest;
             }
+        }
+        
+        function updatePieChart(emotions) {
+            if (!emotions || emotions.length === 0) {
+                pieChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
+                pieChart.update();
+                return;
+            }
+            
+            // Count emotions
+            const emotionCounts = {
+                'happy': 0,
+                'sad': 0,
+                'angry': 0,
+                'fear': 0,
+                'surprise': 0,
+                'disgust': 0,
+                'neutral': 0
+            };
+            
+            emotions.forEach(emotion => {
+                const normalizedEmotion = emotion.toLowerCase();
+                if (emotionCounts.hasOwnProperty(normalizedEmotion)) {
+                    emotionCounts[normalizedEmotion]++;
+                }
+            });
+            
+            // Update pie chart data
+            pieChart.data.datasets[0].data = [
+                emotionCounts['happy'],
+                emotionCounts['sad'],
+                emotionCounts['angry'],
+                emotionCounts['fear'],
+                emotionCounts['surprise'],
+                emotionCounts['disgust'],
+                emotionCounts['neutral']
+            ];
+            pieChart.update();
+        }
+        
+        function updateSessionHistoryTable(logs) {
+            const tbody = document.getElementById('sessionHistoryBody');
+            
+            if (!logs || logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No emotion history found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            logs.forEach((log, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>
+                        <span class="badge" style="background-color: ${getEmotionBadgeColor(log.emotion)}; color: white;">
+                            ${capitalizeFirst(log.emotion)}
+                        </span>
+                    </td>
+                    <td>${log.date}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="deleteSingleEmotion(${index})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function getEmotionBadgeColor(emotion) {
+            const colors = {
+                'happy': '#ffc107',
+                'sad': '#36a2eb',
+                'angry': '#ff6384',
+                'fear': '#9966ff',
+                'surprise': '#ff9f40',
+                'disgust': '#4bc0c0',
+                'neutral': '#c9cbcf'
+            };
+            return colors[emotion.toLowerCase()] || '#6c757d';
+        }
+        
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        
+        function loadAllSessions() {
+            updateChart();
+        }
+        
+        function deleteSingleEmotion(index) {
+            if (!allSessions[index]) {
+                alert('Invalid session selected');
+                return;
+            }
+            
+            const session = allSessions[index];
+            
+            if (!confirm(`Are you sure you want to delete this ${session.emotion} emotion record from ${session.date}?`)) {
+                return;
+            }
+            
+            fetch('/api/delete_emotion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    timestamp: session.date
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Emotion record deleted successfully');
+                    updateChart();
+                } else {
+                    alert('Error deleting emotion: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(err => {
+                console.error('Error deleting emotion:', err);
+                alert('Error deleting emotion record');
+            });
+        }
+        
+        function deleteAllEmotions() {
+            if (!confirm('Are you sure you want to delete ALL your emotion history? This action cannot be undone!')) {
+                return;
+            }
+            
+            if (!confirm('This will permanently delete all your emotion records. Are you absolutely sure?')) {
+                return;
+            }
+            
+            fetch('/api/delete_all_emotions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Successfully deleted ${data.deleted_count} emotion records`);
+                    updateChart();
+                } else {
+                    alert('Error deleting emotions: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(err => {
+                console.error('Error deleting all emotions:', err);
+                alert('Error deleting emotion history');
+            });
         }
         
         // Initial load
