@@ -24,17 +24,17 @@ class EmotionPredictor:
         elif image.ndim == 3 and image.shape[2] == 1:
             image = image[:, :, 0]
         
-        resized_image = cv2.resize(image, (64, 64))  # CHANGED: XCEPTION expects 64x64
+        # Custom trained model uses 48x48 (not XCEPTION's 64x64)
+        resized_image = cv2.resize(image, (48, 48))
         normalized_image = resized_image / 255.0
-        reshaped_image = np.reshape(normalized_image, (1, 64, 64, 1))  # CHANGED: 64x64x1
+        reshaped_image = np.reshape(normalized_image, (1, 48, 48, 1))
         return reshaped_image
 
     def predict_emotion(self, image):
-        # Preprocess: Convert to grayscale, resize to 64x64, normalize
+        # Preprocess: Convert to grayscale, resize to 48x48, normalize
         processed_image = self.preprocess_image(image)
-        # Run inference using loaded XCEPTION model
+        # Run inference using loaded custom model
         predictions = self.model.predict(processed_image)
         # Return highest probability emotion label
         emotion_index = np.argmax(predictions)
-        14
         return self.emotion_labels[emotion_index], predictions[0][emotion_index]

@@ -12,7 +12,8 @@ app.secret_key = 'your_secret_key'
 # Load model and detectors once at startup (PERFORMANCE OPTIMIZATION)
 print("🚀 Loading face detector and emotion model...")
 global_face_detector = FaceDetector()
-global_emotion_predictor = EmotionPredictor('models/fer2013_big_XCEPTION.54-0.66.hdf5')
+# Using custom trained 100-epoch model (59.84% accuracy) instead of XCEPTION (33% accuracy)
+global_emotion_predictor = EmotionPredictor('models/emotion_model_100epochs.h5')
 print("✅ Models loaded successfully!")
 
 def generate_sample_emotion_data(days_active):
@@ -151,7 +152,8 @@ def track():
     if request.method == 'POST':
         video_capture = cv2.VideoCapture(0)
         detector = FaceDetector()
-        predictor = EmotionPredictor('models/fer2013_big_XCEPTION.54-0.66.hdf5')  # Updated model path
+        # Using custom trained 100-epoch model (59.84% accuracy)
+        predictor = EmotionPredictor('models/emotion_model_100epochs.h5')
         while True:
             ret, frame = video_capture.read()
             faces = detector.detect_faces(frame)
@@ -204,9 +206,10 @@ def process_frame():
             face_img = img[y1:y2, x1:x2]
             # Predict emotion if face region is valid
             if face_img.size > 0:
-                emotion, _ = global_emotion_predictor.predict_emotion(face_img)
-                # Draw label with larger font size
-                cv2.putText(img, emotion, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2)
+                emotion, confidence = global_emotion_predictor.predict_emotion(face_img)
+                # Draw label with confidence score
+                label_text = f"{emotion} ({confidence*100:.1f}%)"
+                cv2.putText(img, label_text, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2)
     else:
         emotion = 'No face detected'
 

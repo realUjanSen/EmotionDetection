@@ -40,5 +40,29 @@ Thumbs.db
 
 # Ignore any temp files
 tempCodeRunnerFile.py
-internshipprojectreport.html
 HTML_FORMATTING_INSTRUCTIONS.txt
+
+# Include training scripts
+!train_50.py
+!train_61.py
+
+# Untrack project files
+/Ujan PPT
+/originality report
+/presentation HTML
+/8CC report
+/my understanding
+/guidelines
+internshipprojectreport.html
+guidelines.txt
+my_understanding.txt
+NTCC Report.pdf
+originality report 25.11.2025 15-48-12 - NTCC Report.pdf.html
+emotion-detection-app/test_template_syntax.py
+emotion-detection-app/recreate_pipeline_diagram.py
+UjanPPT.pdf
+startpres.py
+presentation.html
+emotion-detection-app/train_model.py
+emotion-detection-app/train_model_fixed.py
+emotion-detection-app/train_custom_model.py
